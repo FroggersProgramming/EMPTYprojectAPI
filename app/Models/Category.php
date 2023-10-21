@@ -18,13 +18,14 @@ use Illuminate\Support\Facades\Date;
  * Fields
  * @property-read int $id
  * @property string $name
+ * @property int $parent_id
  * @property Date $created_at
  * @property Date $updated_at
  *
  * Relations
  * @property Category $parent
  * @property Category[] $children
- * @property CategoryField[] $additionalFields
+ * @property CategoryField[] $categoryFields
  */
 class Category extends Model
 {
@@ -68,7 +69,7 @@ class Category extends Model
      *
      * @return BelongsToMany|CategoryField[]
      */
-    public function additionalFields(): BelongsToMany|CategoryField
+    public function categoryFields(): BelongsToMany|CategoryField
     {
         return $this->belongsToMany(
             CategoryField::class,
