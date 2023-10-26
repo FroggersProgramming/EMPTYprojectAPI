@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -20,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * Relations
  * @property CategoryField[] $categoryFields
- * @property Tag[] $tags
  */
 class Advertisement extends Model
 {
@@ -38,6 +38,17 @@ class Advertisement extends Model
     ];
 
     /**
+     * Связь с пользователем, создавшим объявление.
+     * Тип связи: Один ко Многим
+     *
+     * @return BelongsTo|User[]
+     */
+    public function user(): BelongsTo|User
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Связь с полями категории.
      * Тип связи: Многие ко Многим
      *
@@ -50,16 +61,5 @@ class Advertisement extends Model
             'advertisement_category_field',
             'advertisement_id',
         );
-    }
-
-    /**
-     * Связь с тэгами.
-     * Тип связи: Многие ко Многим
-     *
-     * @return BelongsToMany|Tag[]
-     */
-    public function tags(): BelongsToMany|Tag
-    {
-        return $this->belongsToMany(Tag::class);
     }
 }

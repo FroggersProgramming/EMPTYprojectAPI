@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
-//            $table->foreignId('category_field_id');
-//            $table->foreignId('tag_id');
             $table->string('title');
             $table->text('description');
             $table->string('location');
