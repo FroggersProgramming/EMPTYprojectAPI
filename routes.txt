@@ -1,0 +1,17 @@
+
+  GET|HEAD   / ....................................................................................................................................................................... 
+  POST       _ignition/execute-solution ................................................................ ignition.executeSolution › Spatie\LaravelIgnition › ExecuteSolutionController
+  GET|HEAD   _ignition/health-check ............................................................................ ignition.healthCheck › Spatie\LaravelIgnition › HealthCheckController
+  POST       _ignition/update-config ......................................................................... ignition.updateConfig › Spatie\LaravelIgnition › UpdateConfigController
+  POST       api/login ................................................................................................................................... login › UserController@auth
+  POST       api/register ............................................................................................................................ register › UserController@store
+  POST       api/role .............................................................................................................................. role.store › RoleController@store
+  PATCH      api/role/{role} ..................................................................................................................... role.update › RoleController@update
+  GET|HEAD   api/role/{role} ......................................................................................................................... role.show › RoleController@show
+  DELETE     api/role/{role}/destroy ........................................................................................................... role.destroy › RoleController@destroy
+  GET|HEAD   api/roles ............................................................................................................................. role.index › RoleController@index
+  GET|HEAD   api/user/{user} ......................................................................................................................... user.show › UserController@show
+  GET|HEAD   sanctum/csrf-cookie ................................................................................... sanctum.csrf-cookie › Laravel\Sanctum › CsrfCookieController@show
+
+                                                                                                                                                                   Showing [13] routes
+
