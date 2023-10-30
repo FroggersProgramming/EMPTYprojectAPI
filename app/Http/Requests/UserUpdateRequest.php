@@ -24,7 +24,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'user.name'  =>  'string|alpha',
-            'user.email' =>  'email|unique:users',
+            'user.email' =>  'email|unique:users,email',
             'user.login' =>  'string',
             'user.password'  =>  'string|min:10|max:30',
             'role_id'   =>  'exists:roles,id',
