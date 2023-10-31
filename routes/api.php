@@ -21,7 +21,15 @@ Route::post('/register', [UserController::class, 'store'])->name('register');
 
 Route::middleware('api.auth')->group(function() {
 
-    Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')
+            ->name('user.index');
+        Route::get('/user/{user}', 'show')
+            ->name('user.show');
+        Route::patch('/user/{user}/update', 'update')
+            ->name('user.update');
+    });
 
     Route::controller(RoleController::class)->group(function() {
         Route::get('/roles', 'index')
