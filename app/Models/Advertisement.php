@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Advertisement
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  *
  * Relations
  * @property CategoryField[] $categoryFields
+ * @property Photo[] $photos
  */
 class Advertisement extends Model
 {
@@ -61,5 +63,16 @@ class Advertisement extends Model
             'advertisement_category_field',
             'advertisement_id',
         );
+    }
+
+    /**
+     * Связь с фотографиями.
+     * Тип связи: Один ко Многим
+     *
+     * @return HasMany|Photo[]
+     */
+    public function photos(): HasMany|Photo
+    {
+        return $this->hasMany(Photo::class);
     }
 }
