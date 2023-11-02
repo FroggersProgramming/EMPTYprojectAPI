@@ -22,6 +22,10 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $email
  * @property string $login
  *
+ * Relations
+ * @property Role $role
+ * @property Advertisement[] $advertisements
+ *
  */
 class User extends Authenticatable
 {
