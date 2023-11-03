@@ -44,4 +44,17 @@ Route::middleware('api.auth')->group(function() {
             ->name('role.destroy');
     });
 
+    Route::controller(\App\Http\Controllers\CategoryFieldController::class)->group(function() {
+        Route::get('/categoryFields', 'index')
+            ->name('categoryField.index');
+        Route::post('/categoryField', 'store')
+            ->name('categoryField.store');
+        Route::patch('/categoryField/{categoryField}', 'update')
+            ->name('categoryField.update');
+        Route::get('/categoryField/{categoryField}', 'show')
+            ->name('categoryField.show');
+        Route::delete('/categoryField/{categoryField}/destroy', 'destroy')
+            ->name('categoryField.destroy');
+    });
+
 });
