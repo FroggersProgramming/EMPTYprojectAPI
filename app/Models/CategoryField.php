@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\CategoryFieldDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -44,4 +45,13 @@ class CategoryField extends Model
             'category_field_id'
         );
     }
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'deleted' => CategoryFieldDeleted::class,
+    ];
 }
