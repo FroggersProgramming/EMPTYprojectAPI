@@ -23,16 +23,16 @@ class RoleController extends Controller
         $roles = Role::all();
         if (!$authUser || $authUser->cannot('viewAny', $roles[0])) {
             return response()->json([
-                'data'  =>  [],
-                'error' =>  [
-                    'code'  =>  401,
-                    'message'   =>  'Unauthorized',
+                'data' => [],
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
                 ],
             ], 401);
         } else {
             return response()->json([
-                'data'  =>  RoleResource::collection($roles),
-                'error'    =>  [],
+                'data' => RoleResource::collection($roles),
+                'error' => [],
             ], 200);
         }
     }
@@ -45,12 +45,23 @@ class RoleController extends Controller
     public function store(RoleStoreRequest $request): JsonResponse
     {
         $role = new Role();
-        $role->fill($request->validated());
-        $role->save();
-        return response()->json([
-            'data'  =>  new RoleResource($role),
-            'error'   =>  [],
-        ], 200);
+        $authUser = User::where('remember_token', $request->bearerToken())->first();
+        if (!$authUser || $authUser->cannot('create', $role)) {
+            return response()->json([
+                'data' => [],
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
+                ],
+            ], 401);
+        } else {
+            $role->fill($request->validated());
+            $role->save();
+            return response()->json([
+                'data' => new RoleResource($role),
+                'error' => [],
+            ], 200);
+        }
     }
 
     /**
@@ -58,12 +69,23 @@ class RoleController extends Controller
      * @param Role $role
      * @return JsonResponse
      */
-    public function show(Role $role): JsonResponse
+    public function show(Role $role, Request $request): JsonResponse
     {
-        return response()->json([
-            'data'  =>  new RoleResource($role),
-            'error' =>  [],
-        ], 200);
+        $authUser = User::where('remember_token', $request->bearerToken())->first();
+        if (!$authUser || $authUser->cannot('view', $role)) {
+            return response()->json([
+                'data' => [],
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
+                ],
+            ], 401);
+        } else {
+            return response()->json([
+                'data' => new RoleResource($role),
+                'error' => [],
+            ], 200);
+        }
     }
 
     /**
@@ -76,18 +98,18 @@ class RoleController extends Controller
         $authUser = User::where('remember_token', $request->bearerToken())->first();
         if (!$authUser || $authUser->cannot('view', $role)) {
             return response()->json([
-                'data'  =>  [],
-                'error' =>  [
-                    'code'  =>  401,
-                    'message'   =>  'Unauthorized',
+                'data' => [],
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
                 ],
             ], 401);
         } else {
             $role->update($request->validated());
             $role->save();
             return response()->json([
-                'data'  =>  new RoleResource($role),
-                'error' =>  [],
+                'data' => new RoleResource($role),
+                'error' => [],
             ], 200);
         }
     }
@@ -95,15 +117,28 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param Role $role
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role, Request $request)
     {
-        $role->delete();
-        return response()->json([
-            'data'  =>  [
-                'message'   =>  'Success',
-            ],
-            'error' =>  [],
-        ], 200);
+        $authUser = User::where('remember_token', $request->bearerToken())->first();
+        if (!$authUser || $authUser->cannot('delete', $role)) {
+            return response()->json([
+                'data' => [],
+                'error' => [
+                    'code' => 401,
+                    'message' => 'Unauthorized',
+                ],
+            ], 401);
+        } else {
+            $role->delete();
+            return response()->json([
+                'data' => [
+                    'message' => 'Success',
+                ],
+                'error' => [],
+            ], 200);
+        }
     }
 }
