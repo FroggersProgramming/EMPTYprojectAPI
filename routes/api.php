@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+Route::get('/test/categories', function () {
+    return \App\Http\Resources\CategoryResource::collect(\App\Models\Category::all());
+});
 Route::post('/login', [UserController::class, 'auth'])->name('login');
 Route::post('/register', [UserController::class, 'store'])->name('register');
 
