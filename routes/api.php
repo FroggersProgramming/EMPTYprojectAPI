@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -55,6 +56,19 @@ Route::middleware('api.auth')->group(function() {
             ->name('categoryField.show');
         Route::delete('/categoryField/{categoryField}/destroy', 'destroy')
             ->name('categoryField.destroy');
+    });
+
+    Route::controller(CategoryController::class)->group(function() {
+        Route::get('/categories', 'index')
+            ->name('category.index');
+        Route::get('/category/{category}', 'show')
+            ->name('category.show');
+        Route::post('/category', 'store')
+            ->name('category.store');
+        Route::patch('/category/{category}', 'update')
+            ->name('category.update');
+        Route::delete('/category/{category}/destroy', 'destroy')
+            ->name('category.destroy');
     });
 
 });
