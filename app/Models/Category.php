@@ -45,22 +45,22 @@ class Category extends Model
      * Связь с родительской категорией
      * Тип связи: Один ко Многим
      *
-     * @return HasMany
+     * @return belongsTo
      */
-    public function parent(): HasMany
+    public function parent(): belongsTo
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     /**
      * Связь с дочерними категориями
      * Тип связи: Один ко Мноигм
      *
-     * @return BelongsTo
+     * @return hasMany
      */
-    public function children(): BelongsTo
+    public function children(): hasMany
     {
-        return $this->belongsTo(Category::class, 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     /**
