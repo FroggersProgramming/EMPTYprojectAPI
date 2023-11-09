@@ -30,7 +30,6 @@ class Photo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'URL',
     ];
 
