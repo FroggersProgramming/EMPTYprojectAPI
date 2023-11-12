@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\CategoryResource;
+use App\Http\Controllers\CategoryFieldController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +22,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/test/categories', function () {
-    return \App\Http\Resources\CategoryResource::collect(\App\Models\Category::all());
+    return CategoryResource::collect(Category::all());
 });
 Route::post('/login', [UserController::class, 'auth'])->name('login');
 Route::post('/register', [UserController::class, 'store'])->name('register');
 
-Route::middleware('api.auth')->group(function() {
+Route::middleware('api.auth')->group(function () {
 
 
     Route::controller(UserController::class)->group(function () {
@@ -34,7 +39,7 @@ Route::middleware('api.auth')->group(function() {
             ->name('user.update');
     });
 
-    Route::controller(RoleController::class)->group(function() {
+    Route::controller(RoleController::class)->group(function () {
         Route::get('/roles', 'index')
             ->name('role.index');
         Route::post('/role', 'store')
@@ -47,7 +52,7 @@ Route::middleware('api.auth')->group(function() {
             ->name('role.destroy');
     });
 
-    Route::controller(\App\Http\Controllers\CategoryFieldController::class)->group(function() {
+    Route::controller(CategoryFieldController::class)->group(function () {
         Route::get('/categoryFields', 'index')
             ->name('categoryField.index');
         Route::post('/categoryField', 'store')
@@ -60,7 +65,7 @@ Route::middleware('api.auth')->group(function() {
             ->name('categoryField.destroy');
     });
 
-    Route::controller(CategoryController::class)->group(function() {
+    Route::controller(CategoryController::class)->group(function () {
         Route::get('/categories', 'index')
             ->name('category.index');
         Route::get('/category/{category}', 'show')
@@ -71,6 +76,27 @@ Route::middleware('api.auth')->group(function() {
             ->name('category.update');
         Route::delete('/category/{category}/destroy', 'destroy')
             ->name('category.destroy');
+    });
+
+    Route::controller(AdvertisementController::class)->group(function () {
+        Route::get('/advertisements/{filter?}', 'index')
+            ->name('advertisement.index');
+        Route::post('/advertisement', 'store')
+            ->name('advertisement.store');
+        Route::patch('/advertisement/{advertisement}', 'update')
+            ->name('advertisement.update');
+        Route::get('/advertisement/{advertisement}', 'show')
+            ->name('advertisement.show');
+        Route::delete('/advertisement/{advertisement}/destroy', 'destroy')
+            ->name('advertisement.destroy');
+    });
+    Route::controller(PhotoController::class)->group(function () {
+        Route::get('/advertisement/{advertisement}/photo', 'index')
+            ->name('advertisement.photo.index');
+        Route::post('/advertisement/{advertisement}/photo', 'store')
+            ->name('advertisement.photo.store');
+        Route::delete('/advertisement/{advertisement}/photo', 'destroy')
+            ->name('advertisement.photo.destroy');
     });
 
 });
