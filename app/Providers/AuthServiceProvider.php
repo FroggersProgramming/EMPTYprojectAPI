@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Advertisement;
 use App\Models\Category;
 use App\Models\CategoryField;
 use App\Models\Role;
 use App\Models\User;
+use App\Policies\AdvertisementPolicy;
 use App\Policies\CategoryFieldPolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\RolePolicy;
@@ -23,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Role::class => RolePolicy::class,
         CategoryField::class => CategoryFieldPolicy::class,
-        Category::class =>  CategoryPolicy::class
+        Category::class =>  CategoryPolicy::class,
+        Advertisement::class => AdvertisementPolicy::class,
     ];
 
     /**
