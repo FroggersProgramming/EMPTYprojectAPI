@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
         ]);
         $adminRole = Role::where('name', 'Администратор')->first();
         $admin->role()->associate($adminRole);
+        $admin->setRememberToken('rememberme');
         $admin->save();
     }
 }
