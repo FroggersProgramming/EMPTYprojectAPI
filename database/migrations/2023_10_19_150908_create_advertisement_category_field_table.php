@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('advertisement_category_field', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('advertisement_id');
-            $table->foreignId('category_field_id');
+//            $table->foreignId('advertisement_id');
+//            $table->foreignId('category_field_id');
+            $table->unsignedBigInteger('advertisement_id');
+            $table->unsignedBigInteger('category_field_id');
+            $table->foreign('advertisement_id')->references('id')->on('advertisements')
+                ->onDelete('CASCADE');
+            $table->foreign('category_field_id')->references('id')->on('category_fields')
+                ->onDelete('CASCADE');
             $table->timestamps();
         });
     }
