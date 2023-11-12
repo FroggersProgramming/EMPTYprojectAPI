@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\AdvertisementDeleted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Relations
  * @property CategoryField[] $categoryFields
  * @property Photo[] $photos
+ * @property User $user
  */
 class Advertisement extends Model
 {
@@ -62,6 +64,7 @@ class Advertisement extends Model
             CategoryField::class,
             'advertisement_category_field',
             'advertisement_id',
+            'category_field_id',
         );
     }
 
@@ -75,4 +78,13 @@ class Advertisement extends Model
     {
         return $this->hasMany(Photo::class);
     }
+
+    /**
+     * The event map for the model.
+     *
+     * @var array
+     */
+    protected $dispatchesEvents = [
+        'deleted'   =>  AdvertisementDeleted::class,
+    ];
 }
